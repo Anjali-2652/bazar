@@ -1,0 +1,117 @@
+<div class="mx-auto p-6 font-sans">
+  <h2 class="text-3xl font-extrabold text-gray-800 mb-6 text-center">🍳 Recipe Finder</h2>
+
+  <!-- Search Bar -->
+  <div class="flex gap-2 mb-6">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Search for a meal (e.g., chicken, pasta, soup)..."
+      (keyup.enter)="searchRecipes()"
+      class="flex-1 px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700"
+    />
+    <button
+      (click)="searchRecipes()"
+      class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition duration-200 cursor-pointer"
+    >
+      Search
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-10 text-gray-500 italic animate-pulse">
+    Searching for delicious meals...
+  </div>
+
+  <!-- Error State -->
+  <div
+    *ngIf="errorMessage"
+    class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded mb-4 shadow-sm"
+  >
+    {{ errorMessage }}
+  </div>
+
+  <!-- Recipe Results -->
+  <div *ngIf="!loading && recipes.length > 0" class="space-y-6 grid grid-cols-3 gap-x-4">
+    <div
+      *ngFor="let recipe of recipes"
+      class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-200"
+    >
+      <!-- Recipe Thumbnail Image -->
+      <div class="h-64 w-full overflow-hidden bg-gray-100">
+        <img
+          [src]="recipe.strMealThumb"
+          [alt]="recipe.strMeal"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <div class="p-6">
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ recipe.strMeal }}</h3>
+
+        <!-- Tags (Category & Area) -->
+        <div class="flex gap-2 mb-4">
+          <span class="bg-orange-100 text-orange-800 text-xs font-medium px-3 py-1 rounded-full">
+            📁 {{ recipe.strCategory }}
+          </span>
+          <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
+            🌍 {{ recipe.strArea }} Cuisine
+          </span>
+
+        </div>
+
+        <!-- Ingredients List -->
+        <div class="mb-2">
+          <h4 class="text-sm font-semibold uppercase tracking-wider text-gray-500">Ingredients:</h4>
+          <ul
+            class="list-disc list-inside bg-gray-50 rounded-lg border border-gray-100 text-gray-700 space-y-1"
+          >
+            <!-- Shows first 4 items if collapsed, or all if expanded -->
+            <li
+              *ngFor="
+                let ingredient of recipe.expanded
+                  ? recipe.ingredients
+                  : recipe.ingredients.slice(0, 1)
+              "
+            >
+              {{ ingredient }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Instructions (Truncated when collapsed, full when expanded) -->
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold uppercase tracking-wider text-gray-500">
+            Instructions:
+          </h4>
+          <p
+            class="text-gray-700 leading-relaxed bg-gray-50 rounded-lg border border-gray-100 text-sm whitespace-pre-line"
+          >
+            {{
+              recipe.expanded
+                ? recipe.strInstructions
+                : (recipe.strInstructions | slice: 0 : 50) +
+                  (recipe.strInstructions.length > 50 ? '...' : '')
+            }}
+          </p>
+        </div>
+
+        <!-- ONE MASTER BUTTON FOR BOTH -->
+        <button
+          (click)="toggleRecipe(recipe)"
+          class="w-full py-2.5 bg-red-600 text-white hover:bg-red-100 hover:text-red-800 font-semibold rounded-lg text-sm transition duration-200 cursor-pointer flex items-center justify-center gap-1 border border-orange-200"
+        >
+          {{ recipe.expanded ? '↑ Show Less' : '↓ See Full Recipe ' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div
+    *ngIf="!loading && recipes.length === 0 && !errorMessage"
+    class="text-center py-10 text-gray-500 bg-gray-50 rounded-xl border border-dashed border-gray-300"
+  >
+    No meals found. Try searching for something else!
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<nav class="  pt-10">
+  <ul class="flex flex-wrap gap-x-6 gap-y-8 text-xl justify-center pb-10">
+    <li>
+      <a
+        routerLink=""
+        routerLinkActive="bg-black text-gray-100 font-thin border-none"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="rounded-full px-4 py-1 text-xl border border-gray-400 cursor-pointer"
+      >
+        Home
+      </a>
+    </li>
+    <li>
+      <a
+        routerLink="/recipe"
+        routerLinkActive="bg-black text-gray-100 font-thin border-none"
+        class="rounded-full px-4 py-1 text-md border border-gray-400 cursor-pointer"
+        >Recipe</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/animals"
+        routerLinkActive="bg-black text-gray-100  font-thin border-none"
+        class="rounded-full px-4 py-1 text-xl border border-gray-400 cursor-pointer"
+        >Animals</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/city"
+        routerLinkActive="bg-black text-gray-100  font-thin border-none"
+        class="rounded-full px-4 py-1 text-xl border border-gray-400 cursor-pointer"
+        >City</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/cars"
+        routerLinkActive="bg-black text-gray-100  font-thin border-none"
+        class="rounded-full px-4 py-1 text-xl border border-gray-400 cursor-pointer"
+        >Cars</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/motorcycle"
+        routerLinkActive="bg-black text-gray-100  font-thin border-none"
+        class="rounded-full px-4 py-1 text-xl border border-gray-400 cursor-pointer"
+        >MotorCycle</a
+      >
+    </li>
+  </ul>
+</nav>
+<router-outlet></router-outlet>
