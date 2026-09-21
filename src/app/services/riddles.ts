@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class Riddles {
   private apiUrl = 'https://api.api-ninjas.com/v1/riddles';
-  private apiKey = ' qrHfBREroVl2cDG1vIddMMia4yMnS5MRy0atfBYO'
+  private apiKey = ' qrHfBREroVl2cDG1vIddMMia4yMnS5MRy0atfBYO';
+  responseData: any;
 
   constructor(private http: HttpClient){}
 
@@ -17,11 +18,7 @@ export class Riddles {
       'X-Api-Key' : this.apiKey
     });
   }
-  getRiddles():Observable<any>{
-    return this.http.get<any>(this.apiUrl, {headers:this.getHeaders()}).subscribe({
-      next:(resData)=>{
-        console.log(resData)
-      }
-    });
+  getRiddles(){
+    this.http.get(this.apiUrl).subscribe(res=> this.responseData = res)
   }
 }
